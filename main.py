@@ -117,6 +117,16 @@ board_2 = [
 print(get_winner(board_2))
 '''
 
+def is_board_full(board, possible_winner):
+    if possible_winner == None:
+        sum = 0
+        for i in range(0, len(board)):
+            for j in range(0, len(board[0])):
+                if board[i][j] == 'X' or board[i][j] == 'O':
+                    sum += 1
+        if sum == len(board) * len(board[0]):
+            return True
+
 def run_game():
     board = new_board()
     render(board)
@@ -125,6 +135,9 @@ def run_game():
         winner = get_winner(board)
         if winner == 'X' or winner == 'O':
             print(winner + " wins the game!")
+            break
+        if is_board_full(board, winner):
+            print("It's a draw!")
             break
         current_player = "X"
         if i % 2 == 1:
