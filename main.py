@@ -1,4 +1,3 @@
-from colorama import Fore, Back, Style
 import sys
 
 def new_board():
@@ -18,17 +17,17 @@ def render(board):
     for i in range(0, len(board)):
         for j in range(0, len(board[0])):
             if board[i][j] == 'X':
-                board[i][j] = Fore.CYAN + "X"
+                board[i][j] = u"\u001b[36mX"
             elif board[i][j] == 'O':
-                board[i][j] = Fore.YELLOW + "O"
+                board[i][j] = u"\u001b[33mO"
     # this manual way is actually quicker and simpler than a complicated for loop with an if-else statement inside
     # we're formatting this a bit differently as x,y coordinates
-    print("0  " + board[0][0] + " | " + board[1][0] + " | " + board[2][0])
-    line = ["_" for i in range(0, len(board[0])+8)]
+    print(u"\u001b[37m0  " + board[0][0] + u"\u001b[37m | " + board[1][0] + u"\u001b[37m | " + board[2][0])
+    line = [u"\u001b[37m_" for i in range(0, len(board[0])+8)]
     print("  " + "".join(line))
-    print("1  " + board[0][1] + " | " + board[1][1] + " | " + board[2][1])
+    print(u"\u001b[37m1  " + board[0][1] + u"\u001b[37m | " + board[1][1] + u"\u001b[37m | " + board[2][1])
     print("  " + "".join(line))
-    print("2  " + board[0][2] + " | " + board[1][2] + " | " + board[2][2])
+    print(u"\u001b[37m2  " + board[0][2] + u"\u001b[37m | " + board[1][2] + u"\u001b[37m | " + board[2][2])
 #board = new_board()
 #board[0][1] = 'X'
 #board[1][1] = 'O'
