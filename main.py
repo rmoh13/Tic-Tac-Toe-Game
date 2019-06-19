@@ -15,6 +15,12 @@ def render(board):
         for j in range(0, len(board[0])):
             if board[i][j] == None:
                 board[i][j] = " "
+    for i in range(0, len(board)):
+        for j in range(0, len(board[0])):
+            if board[i][j] == 'X':
+                board[i][j] = Fore.CYAN + "X"
+            elif board[i][j] == 'O':
+                board[i][j] = Fore.YELLOW + "O"
     # this manual way is actually quicker and simpler than a complicated for loop with an if-else statement inside
     # we're formatting this a bit differently as x,y coordinates
     print("0  " + board[0][0] + " | " + board[1][0] + " | " + board[2][0])
@@ -154,7 +160,7 @@ def run_game():
     print("You can play against another person or an AI")
     option = input("Do you want to play against another player or an AI? ")
     player1Name = input("Player 1 (X), Enter in your name: ")
-    player2Name = input("Player 2 (X), Enter in your name: ")
+    player2Name = input("Player 2 (O), Enter in your name: ")
     if 'AI' not in option:
         i = 1
         while True:
