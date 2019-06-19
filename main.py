@@ -1,3 +1,5 @@
+from colorama import Fore, Back, Style
+import sys
 
 def new_board():
     #l = [[None] * 3] * 3 doesn't work because replicating a list with * doesn’t create copies, it only creates references to the existing objects, so it makes copies and you can't edit
@@ -26,25 +28,43 @@ def render(board):
 #board[1][1] = 'O'
 #render(board)
 
-def get_move(i):
-    if i % 2 == 1:
+def get_move(num):
+    if num % 2 == 1:
         x_coord = input("Player 1 (X): What is your move's X coordinate? ")
         y_coord = input("Player 1 (X): What is your move's Y coordinate? ")
+        if "exit" in x_coord or "exit" in y_coord:
+            print("Aww, you forfeited! Player 2 (O) wins!")
+            sys.exit()
     else:
         x_coord = input("Player 2 (O): What is your move's X coordinate? ")
         y_coord = input("Player 2 (O): What is your move's Y coordinate? ")
-    coords = (int(x_coord), int(y_coord))
+        if "exit" in x_coord or "exit" in y_coord:
+            print("Aww, you forfeited! Player 1 (X) wins!")
+            sys.exit()
+    try:
+        coords = (int(x_coord), int(y_coord))
+    except ValueError:
+        print("You didn't type in a number! Try again.")
+        return False
     return coords
 #print(get_move())
 
-def make_move(board, coords, turn):
+def make_move(board, coords, num):
     # we could update the given board or just return a new board, let's do the latter because it might be easier to work with
+    if num % 2 == 1:
+        turn = "X"
+    else:
+        turn = "O"
     new_board = board
-    if board[coords[0]][coords[1]] == " ":
+    if coords[0] >= len(board) or coords[1] >= len(board[0]):
+        print("Invalid move! Your choice is off the grid. Try again.")
+        return False
+    elif board[coords[0]][coords[1]] == " ":
         new_board[coords[0]][coords[1]] = turn
         return new_board
     else:
-        raise Exception("Invalid move!")
+        print("Invalid move! That spot is already taken. Try again.")
+        return False
 
 '''
 board = new_board()
@@ -130,22 +150,34 @@ def is_board_full(board, possible_winner):
 def run_game():
     board = new_board()
     render(board)
-    i = 1
-    while True:
-        winner = get_winner(board)
-        if winner == 'X' or winner == 'O':
-            print(winner + " wins the game!")
-            break
-        if is_board_full(board, winner):
-            print("It's a draw!")
-            break
-        current_player = "X"
-        if i % 2 == 1:
+    print("Welcome to Tic-Tac-Toe. The rules are the same, and you can type ''exit'' if you want to forfeit.")
+    print("You can play against another person or an AI")
+    option = input("Do you want to play against another player or an AI? ")
+    if 'AI' not in option:
+        i = 1
+        while True:
+            winner = get_winner(board)
+            if winner == 'X' or winner == 'O':
+                print(winner + " wins the game!")
+                break
+            if is_board_full(board, winner):
+                print("It's a draw!")
+                break
             current_player = "X"
-        else:
-            current_player = "O"
-        coords = get_move(i)
-        board = make_move(board, coords, current_player)
-        render(board)
-        i += 1
+            if i % 2 == 1:
+                current_player = "X"
+            else:
+                current_player = "O"
+            coords = get_move(i)
+            while coords == False:
+                coords = get_move(i)
+            b1 = board
+            board = make_move(board, coords, i)
+            while board == False:
+                coords = get_move(i)
+                while coords == False:
+                    coords = get_move(i)
+                board = make_move(b1, coords, i)
+            render(board)
+            i += 1
 run_game()
