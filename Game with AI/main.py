@@ -1,4 +1,5 @@
 import sys
+from colorama import Fore, Back, Style
 
 def new_board():
     #l = [[None] * 3] * 3 doesn't work because replicating a list with * doesn’t create copies, it only creates references to the existing objects, so it makes copies and you can't edit
