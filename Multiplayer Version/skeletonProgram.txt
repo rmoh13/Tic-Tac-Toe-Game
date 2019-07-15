@@ -1,0 +1,66 @@
+'''
+This is a small, yet complex program/project, so this is just a skeleton program in pseudocode to help us map out how to organize this project
+and make an organizational map of all the different other programs involved in this project and how they interact with each other.
+It's always good to split the project and code into well-sized chunks of work and functions that you can work on in total isolation without having to worry about
+the others and these are the fundamental pieces and you want to finish those parts first, then glue it all back together once you're finished writing
+each component.
+'''
+
+'''
+First, generate a new Tic-Tac-Toe Board. Print the new board. Ask for coordinates of input for P1 (this one is X). Make the move and Print out new board.
+Repeat this process but for P2 and an O. Then, figure out the winner, but if the board is full, then it's a draw.
+'''
+
+
+board = new_board()
+
+# Loop through turns until the game is over
+loop forever:
+  # TODO: hmm I'm not sure how best to do this
+  # right now. No problem, I'll come back later.
+  current_player = ???
+
+  # Print the current state of the board
+  render(board)
+
+  # Get the move that the current player is going
+  # to make.
+  move_co_ords = get_move()
+
+  # Make the move that we calculated above
+  make_move(board, move_co_ords, current_player)
+
+  # Work out if there's a winner
+  winner = get_winner(board)
+
+  # If there is a winner, crown them the champion
+  # and exit the loop.
+  if winner is not None:
+    print "WINNER IS %s!!" % winner
+    break
+
+  # If there is no winner and the board is full,
+  # exit the loop.
+  if is_board_full(board):
+    print "IT'S A DRAW!!"
+    break
+
+  # Repeat until the game is over
+
+
+# So, we have about 6 main components and functions to work with: new_board, render, get_move, make_move, get_winner, and is_board_full
+
+'''
+Ok let's lay out the plan for the Multiplayer version of the game. We have client, server, and game files. The game represents the state of the Game
+and the server basically just manages the game and updates the clients on their display. Server starts up and listens to connections (2 at a time). Game
+holds all the information for the game and client file is for the display and interface and calls functions from Game which provides the main functionality
+and the server file also accesses Game too. Each pair of clients has its own instance of Game running. Remember that client is for the UI, game is
+for the actual game functionality, and server is how the two clients can connect to one another and play with each other.
+Clients only capture inputs, send it to server which has all the game logic, and server updates the clients
+
+Each Player (instance of the Player class) has their own copy of the board, and in the Game class, we have the run game method, so
+we run the game, assign respective attributes to each Player, and then we continuously alternate between getting the moves from each player,
+and after getting each move, we update the current Player's version of the board (they have the same copy) and render it for them
+and they send the info/board to the Server and the server sends that to the other player (other client) and that other player renders it on their screen
+and we ask for their input, and this whole cycle starts again. You determine which player is going currently based on num.
+'''
