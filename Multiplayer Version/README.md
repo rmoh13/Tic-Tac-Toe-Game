@@ -1,0 +1,2 @@
+I went through a bunch of different changes and code refactoring to make the game as close to perfection as possible. I added a bunch of unecessary code here to showcase my failures and the really really bad code that I didn't end up using and most of that bad code is incomplete.
+The two files you wanna run are player1.py and player2.py as player1 is also the server and player2 opens a socket on that computer that let's it connect to the server socket in player1
