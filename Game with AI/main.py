@@ -276,15 +276,7 @@ def play(first_AI, second_AI):
                     print("It's a draw!")
                     break
                 coords = random_AI(board, i)
-                while coords == False:
-                    coords = random_AI(board, i)
-                b1 = board
                 board = make_move(board, coords, i)
-                while board == False:
-                    coords = random_AI(board, i)
-                    while coords == False:
-                        coords = random_AI(board, i)
-                    board = make_move(b1, coords, i)
                 render(board)
             else:
                 winner = get_winner(board)
@@ -298,15 +290,7 @@ def play(first_AI, second_AI):
                     print("It's a draw!")
                     break
                 coords = finds_winning_moves_AI(board, i)
-                while coords == False:
-                    coords = finds_winning_moves_AI(board, i)
-                b1 = board
                 board = make_move(board, coords, i)
-                while board == False:
-                    coords = finds_winning_moves_AI(board, i)
-                    while coords == False:
-                        coords = finds_winning_moves_AI(board, i)
-                    board = make_move(b1, coords, i)
                 render(board)
             i += 1
 
@@ -375,15 +359,7 @@ def run_game():
                     print("It's a draw!")
                     break
                 coords = random_AI(board, i)
-                while coords == False:
-                    coords = random_AI(board, i)
-                b1 = board
                 board = make_move(board, coords, i)
-                while board == False:
-                    coords = random_AI(board, i)
-                    while coords == False:
-                        coords = random_AI(board, i)
-                    board = make_move(b1, coords, i)
                 render(board)
                 i += 1
         elif 'slight' in option:
@@ -400,15 +376,7 @@ def run_game():
                     print("It's a draw!")
                     break
                 coords = finds_winning_moves_AI(board, i)
-                while coords == False:
-                    coords = finds_winning_moves_AI(board, i)
-                b1 = board
                 board = make_move(board, coords, i)
-                while board == False:
-                    coords = finds_winning_moves_AI(board, i)
-                    while coords == False:
-                        coords = finds_winning_moves_AI(board, i)
-                    board = make_move(b1, coords, i)
                 render(board)
                 i += 1
     else:
@@ -428,15 +396,7 @@ def run_game():
                         print("It's a draw!")
                         break
                     coords = random_AI(board, i)
-                    while coords == False:
-                        coords = random_AI(board, i)
-                    b1 = board
                     board = make_move(board, coords, i)
-                    while board == False:
-                        coords = random_AI(board, i)
-                        while coords == False:
-                            coords = random_AI(board, i)
-                        board = make_move(b1, coords, i)
                     render(board)
                 else:
                     winner = get_winner(board)
@@ -450,15 +410,7 @@ def run_game():
                         print("It's a draw!")
                         break
                     coords = finds_winning_moves_AI(board, i)
-                    while coords == False:
-                        coords = finds_winning_moves_AI(board, i)
-                    b1 = board
                     board = make_move(board, coords, i)
-                    while board == False:
-                        coords = finds_winning_moves_AI(board, i)
-                        while coords == False:
-                            coords = finds_winning_moves_AI(board, i)
-                        board = make_move(b1, coords, i)
                     render(board)
                 i += 1
         elif 'slight' in option2:
@@ -475,15 +427,7 @@ def run_game():
                     print("It's a draw!")
                     break
                 coords = finds_winning_moves_AI(board, i)
-                while coords == False:
-                    coords = finds_winning_moves_AI(board, i)
-                b1 = board
                 board = make_move(board, coords, i)
-                while board == False:
-                    coords = finds_winning_moves_AI(board, i)
-                    while coords == False:
-                        coords = finds_winning_moves_AI(board, i)
-                    board = make_move(b1, coords, i)
                 render(board)
                 i += 1
 
