@@ -1,5 +1,6 @@
 import sys
 import random
+from math import *
 from colorama import Fore, Back, Style
 
 def new_board():
@@ -59,9 +60,9 @@ def get_move(num, player1Name, player2Name):
 def make_move(board, coords, num):
     # we could update the given board or just return a new board, let's do the latter because it might be easier to work with
     if num % 2 == 1:
-        turn = "X"
+        turn = u"\u001b[36mX"
     else:
-        turn = "O"
+        turn = u"\u001b[33mO"
     new_board = board
     if coords[0] >= len(board) or coords[1] >= len(board[0]):
         print("Invalid move! Your choice is off the grid. Try again.")
@@ -307,8 +308,60 @@ def repeated_battle(N, first_AI, second_AI):
         sum += play(first_AI, second_AI)
     average = sum / N
     return average
-
 #print(repeated_battle(50, "random", "slightly"))
+
+# assume the AI is player 1 or 'X' and the opponent is player 2 or 'O' for simplicity. Remember K.I.S.S.
+def minimax_score(board, turn):
+    if turn % 2 == 1:
+        current_player = u"\u001b[36mX"
+        opponent = u"\u001b[33mO"
+    else:
+        current_player = u"\u001b[33mO"
+        opponent = u"\u001b[36mX"
+
+    winner = get_winner(board)
+    if winner == u"\u001b[36mX":
+        return 10
+    elif winner == u"\u001b[33mO":
+        return -10
+    if is_board_full(board, winner):
+        return 0
+
+    available_moves = []
+    for i in range(0, len(board)):
+        for j in range(0, len(board[0])):
+            if board[i][j] == " ":
+                available_moves.append((i,j))
+
+    if current_player == u"\u001b[36mX":
+        # we wanna find the max
+        best = -10000
+        for i in range(0, len(available_moves)):
+            temp_board = make_move(board, available_moves[i], turn)
+            score = minimax_score(temp_board, turn+1)
+            if score > best:
+                best = score
+    elif current_player == u"\u001b[33mO":
+        # we wanna find the min
+        best = 10000
+        for i in range(0, len(available_moves)):
+            temp_board = make_move(board, available_moves[i], turn)
+            score = minimax_score(temp_board, turn+1)
+            if score < best:
+                best = score
+    return best
+
+def minimax_AI(board, turn):
+    available_moves = []
+    for i in range(0, len(board)):
+        for j in range(0, len(board[0])):
+            if board[i][j] == " ":
+                available_moves.append((i,j))
+
+    for i in range(0, len(available_moves)):
+        temp_board = make_move(board, available_moves[i], turn)
+        if minimax_score(temp_board, turn) >= 0:
+            return available_moves[i]
 
 def run_game():
     board = new_board()
@@ -376,6 +429,23 @@ def run_game():
                     print("It's a draw!")
                     break
                 coords = finds_winning_moves_AI(board, i)
+                board = make_move(board, coords, i)
+                render(board)
+                i += 1
+        elif 'very' in option:
+            i = 1
+            while True:
+                winner = get_winner(board)
+                if winner == u"\u001b[36mX":
+                    print(Fore.GREEN + u"\u001b[36mX" + " wins the game!")
+                    break
+                elif winner == u"\u001b[33mO":
+                    print(Fore.GREEN + u"\u001b[33mO" + " wins the game!")
+                    break
+                if is_board_full(board, winner):
+                    print("It's a draw!")
+                    break
+                coords = minimax_AI(board, i)
                 board = make_move(board, coords, i)
                 render(board)
                 i += 1
